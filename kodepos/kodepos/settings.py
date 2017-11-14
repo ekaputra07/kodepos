@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'kodepos.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'kodepos (+http://www.yourdomain.com)'
+USER_AGENT = 'kodepos (+https://ekaputra07.github.io/kodepos/)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
