@@ -60,7 +60,22 @@ class KodeposNomorNetSpider(scrapy.Spider):
 
     self.crawled_pages.append(token)
 
-    yield KodeposItem(token=token, provinsi=unquote(prov))
+    # START: Parse response
+    rows = response.css('tr[bgcolor="#ccffff"]')
+    for row in rows:
+      cols = row.css('td')
+
+      provinsi = prov
+      kodepos = cols[1].css('a.ktu::text').extract_first(default='n/a')
+      desa = cols[2].css('a::text').extract_first(default='n/a')
+      kecamatan = cols[3].css('a::text').extract_first(default='n/a')
+      daerah_t2 = cols[4].css('td::text').extract_first()
+      kabupaten_kota = cols[5].css('a::text').extract_first(default='n/a')
+
+      yield KodeposItem(provinsi=provinsi, kodepos=kodepos, desa=desa,
+                        kecamatan=kecamatan, daerah_t2=daerah_t2,
+                        kabupaten_kota=kabupaten_kota)
+    # END: Parse response
 
     for url in response.css('td a.tpage::attr(href)').extract():
 
@@ -83,14 +98,14 @@ class KodeposNomorNetSpider(scrapy.Spider):
     Return province name from url.
     """
     result = re.search(r"jobs=(?P<prov>[\w%\(\)\+ ]*)&", url)
-    return result.group("prov")
+    return unquote(result.group("prov"))
 
   def get_unique_token(self, prov, page):
     """
     Return unique token from combination of Province and Page number.
     example: kalimantan-barat-25
     """
-    cleaned_prov = unquote(prov).replace(" ", "-").lower()
+    cleaned_prov = prov.replace(" ", "-").lower()
     return "%s-%s" % (cleaned_prov, page)
 
   def get_unique_token_from_url(self, url):
