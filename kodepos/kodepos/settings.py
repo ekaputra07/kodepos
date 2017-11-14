@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 
 # Scrapy settings for kodepos project
 #
@@ -17,6 +18,9 @@ NEWSPIDER_MODULE = 'kodepos.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'kodepos (+https://ekaputra07.github.io/kodepos/)'
+
+FEED_URI = 'file://' + os.path.join(os.getcwd(), '..', 'output/kodepos.jsonl')
+FEED_FORMAT = 'jsonlines' # http://jsonlines.org/
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
