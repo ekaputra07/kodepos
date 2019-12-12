@@ -1,2 +1,9 @@
-# kodepos-id
-Daftar kode pos Indonesia lengkap dengan format yang di-"cintai" para developer yaitu CSV & JSON, disertai juga dengan source code scrapper yang berbasis Python Scrapy. Sumber kodepos: http://kodepos.nomor.net
+# kodepos scrapper
+Scrapper kode POS Indonesia berbasis Python Scrapy. Sumber kodepos: http://kodepos.nomor.net
+
+Untuk menjalankan:
+
+```
+$ cd kodepos
+$ scrapy runspider kodepos/spiders/kodepos_nomor_net_spider.py
+```
